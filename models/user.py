@@ -10,7 +10,7 @@ class User(BaseModel):
     """class body"""
     def __init__(self):
         """Initializing User instance with public class attribute"""
-        super().__init__(*args, **kwargs)
+        super().__init__()
         self.email = ""
         self.password = ""
         self.first_name = ""
