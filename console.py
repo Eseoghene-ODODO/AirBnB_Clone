@@ -125,6 +125,23 @@ class HBNBCommand(cmd.Cmd):
         if class_name == 'User':
             self.do_all("User")
 
+    def do_count(self, arg):
+        """Counts the number of intsances of a class"""
+        args = arg.split()
+        if not args:
+            print('** class name missing **')
+            return
+        class_name = args[0]
+        if class_name not in globals():
+            print("** class doesn't exist **")
+            return
+        instances = storage.all()
+        count = sum(
+                1 for obj in instances.value()
+                if isinstance(obj, getattr(storage, class_name))
+                )
+        print(count)
+
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
         args = shlex.split(arg)
