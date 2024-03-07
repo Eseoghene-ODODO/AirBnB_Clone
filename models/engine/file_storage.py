@@ -18,6 +18,15 @@ class FileStorage:
     """class body"""
     __file_path = 'file.json'
     __objects = {}
+    CLASSES = {
+            'BaseModel': BaseModel,
+            'User': User,
+            'Place': Place,
+            'State': State,
+            'City': City,
+            'Amenity': Amenity,
+            'Review': Review
+            }
 
     def all(self):
         """Returns the dictionary of the private class attribute __objects"""
@@ -51,7 +60,7 @@ class FileStorage:
                 data = json.load(file)  # data is handling deserialization
                 for key, value in data.items():
                     class_name, obj_id = key.split('.')
-                    obj_class = globals()[class_name]
+                    obj_class = self.CLASSES[class_name]
                     new_obj = obj_class(**value)
                     self.__class__.__objects[key] = new_obj
         except (FileNotFoundError, json.JSONDecodeError):
