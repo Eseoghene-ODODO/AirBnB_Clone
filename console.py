@@ -77,6 +77,8 @@ class HBNBCommand(cmd.Cmd):
             print(str(instance))
         else:
             print("** no instance found **")
+        if class_name == 'User':
+            self.do_show(f"User {instance_id}")
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
@@ -102,6 +104,8 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
         else:
             print("** no instance found **")
+        if class_name == 'User':
+            self.do_destroy(f"User {instance_id}")
 
     def do_all(self, arg):
         """Prints all string representation of all the based or not on the
@@ -118,6 +122,8 @@ class HBNBCommand(cmd.Cmd):
                     if isinstance(obj, getattr(storage, class_name))
                     }
         print([str(obj) for obj in instances.values()])
+        if class_name == 'User':
+            self.do_all("User")
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
@@ -168,6 +174,10 @@ class HBNBCommand(cmd.Cmd):
                     )
         except AttributeError:
             print("** attribute name doesn't exist **")
+        if class_name == 'User':
+            self.do_update(
+                    f"User {instance_id} {attribute_name} {attribute_value}"
+                    )
         storage.save()
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
