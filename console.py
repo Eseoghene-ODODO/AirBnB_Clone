@@ -108,15 +108,14 @@ class HBNBCommand(cmd.Cmd):
         class name"""
         args = arg.split()
         class_name = args[0] if args else None
-        if class_name and class_name not in globals():
+        if class_name and not hasattr(storage, class_name):
             print("** class doesn't exist **")
             return
-        storage = FileStorage()
-        instances = storage._FileStorage__objects
+        instances = storage.all()
         if class_name:
             instances = {
                     key: obj for key, obj in instances.items()
-                    if key.startswith(class_name + ".")
+                    if isinstance(obj, getattr(storage, class_name))
                     }
         print([str(obj) for obj in instances.values()])
 
