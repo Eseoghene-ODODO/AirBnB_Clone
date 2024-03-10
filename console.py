@@ -31,7 +31,7 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, line):
         """Exits the command line on EOF"""
         return True
-    
+
     def do_help(self, arg):
         """Displays help message"""
         super().do_help(arg)
@@ -59,7 +59,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
         class_name = args[0]
-        
+
         if class_name not in globals():
             print("** class doesn't exist **")
             return
@@ -159,35 +159,34 @@ class HBNBCommand(cmd.Cmd):
         if len(args) < 3:
             print("** attribute name missing **")
             return
-        attribute_name = args[2]
-        if (
-                attribute_name == 'id' or
-                attribute_name == 'created_at' or
-                attribute_name == 'updated_at'
-                ):
-            print("** can't update id, created_at, or updated_at **")
-            return
-        if len(args) < 4:
-            print("** value missing **")
-            return
-        attribute_value = args[3]
-        if not hasaattr(instancs, attribute_name):
-            print("** attribute name doesn't exist **")
-        attribute_type = type(getattr(instance, attribute_name))
+        dict_rep = args[2]
         try:
-            setattr(
-                    instance,
-                    attribute_name,
-                    attribute_type(
-                        attribute_value
-                        )
-                    )
-        except ValueError:
-            print("** invalid value for attribute {attribute_name}  **")
+            update_dict = eva(dict_rep)
+        except (SyntaxError, ValueError):
+            print("** invalid dictionary representation **")
+            return
+        if not isinstance(update_dict, dict):
+            print("** invalid dictionary representation **")
+            return
+        for key, value in update_dict.items():
+            if key == 'id' or key == 'created_at' or key == 'updated_at':
+                print(f"** can't update {key} attribute **")
+                return
+            if not hasattr(instance, key):
+                print("** attribute {key} doesn't exist **")
+                return
+            attribute_type = type(getattr(instance, key))
+            try:
+                setattr(instance, key, attribute_type(value))
+            except ValueError:
+                print(f"** invalid value for attribute {key} **")
+                return
         if class_name == 'User':
             self.do_update(
                     f"User {instance_id} {attribute_name} {attribute_value}"
                     )
         storage.save()
+
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

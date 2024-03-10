@@ -8,9 +8,9 @@ from models.base_model import BaseModel
 
 class User(BaseModel):
     """class body"""
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initializing User instance with public class attribute"""
-        super().__init__()
+        super().__init__(*args, **kwargs)
         self.email = ""
         self.password = ""
         self.first_name = ""

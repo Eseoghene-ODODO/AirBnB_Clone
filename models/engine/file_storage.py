@@ -65,6 +65,8 @@ class FileStorage:
                     self.__class__.__objects[key] = new_obj
         except (FileNotFoundError, json.JSONDecodeError):
             pass
+
+
 if __name__ == '__main__':
     storage = FileStorage()
     storage.reload()
