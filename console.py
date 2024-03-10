@@ -131,7 +131,7 @@ class HBNBCommand(cmd.Cmd):
             return
         instances = storage.all()
         count = sum(
-                1 for obj in instances.value()
+                1 for obj in instances.values()
                 if isinstance(obj, getattr(storage, class_name))
                 )
         print(count)
@@ -161,7 +161,7 @@ class HBNBCommand(cmd.Cmd):
             return
         dict_rep = args[2]
         try:
-            update_dict = eva(dict_rep)
+            update_dict = eval(dict_rep)
         except (SyntaxError, ValueError):
             print("** invalid dictionary representation **")
             return
