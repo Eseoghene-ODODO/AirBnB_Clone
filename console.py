@@ -150,14 +150,9 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         instance_id = args[1]
-        storage = FileStorage()
-        instances = storage._FileStorage__objects
         key = f"{class_name}.{instance_id}"
-        instance = None
-        for obj in instances.values():
-            if obj.__class__.__name__ == class_name and obj.id == instance_id:
-                instance = obj
-                break
+        instances = storage.all()
+        instance = instances.get(key)
         if not instance:
             print("** no instance found **")
             return
@@ -165,26 +160,30 @@ class HBNBCommand(cmd.Cmd):
             print("** attribute name missing **")
             return
         attribute_name = args[2]
+        if (
+                attribute_name == 'id' or
+                attribute_name == 'created_at' or
+                attribute_name == 'updated_at'
+                ):
+            print("** can't update id, created_at, or updated_at **")
+            return
         if len(args) < 4:
             print("** value missing **")
             return
         attribute_value = args[3]
+        if not hasaattr(instancs, attribute_name):
+            print("** attribute name doesn't exist **")
+        attribute_type = type(getattr(instance, attribute_name))
         try:
             setattr(
                     instance,
                     attribute_name,
-                    type(
-                        getattr(
-                            instance,
-                            attribute_name
-                            )
-                        )
-                    (
+                    attribute_type(
                         attribute_value
                         )
                     )
-        except AttributeError:
-            print("** attribute name doesn't exist **")
+        except ValueError:
+            print("** invalid value for attribute {attribute_name}  **")
         if class_name == 'User':
             self.do_update(
                     f"User {instance_id} {attribute_name} {attribute_value}"
