@@ -60,18 +60,15 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         class_name = args[0]
         
-        try:
-            model_class = globals()[class_name]
-        except KeyError:
+        if class_name not in globals():
             print("** class doesn't exist **")
             return
 
         if len(args) < 2:
             print("** instance id missing ** ")
         instance_id = args[1]
-        storage = FileStorage()
-        instances = storage._FileStorage__objects
         key = f"{class_name}.{instance_id}"
+        instances = storage.all()
         instance = instances.get(key)
         if instance:
             print(str(instance))
@@ -87,17 +84,14 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = args[0]
-        try:
-            model_class = globals()[class_name]
-        except KeyError:
+        if class_name not in globals():
             print("** class doesn't exist **")
             return
         if len(args) < 2:
             print("** instance id missing **")
         instance_id = args[1]
-        storage = FileStorage()
-        instances = storage._FileStorage__objects
         key = f"{class_name}.{instance_id}"
+        instances = storage.all()
         instance = instances.get(key)
         if instance:
             del instances[key]
