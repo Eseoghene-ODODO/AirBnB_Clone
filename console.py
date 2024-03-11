@@ -21,7 +21,6 @@ import shlex
 
 class HBNBCommand(cmd.Cmd):
     """HBNBCommand body"""
-    into = print("Welcome to my AirBnB console.")
     prompt = "(hbnb) "
 
     def do_quit(self, line):
@@ -66,6 +65,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(args) < 2:
             print("** instance id missing ** ")
+            return
         instance_id = args[1]
         key = f"{class_name}.{instance_id}"
         instances = storage.all()
@@ -189,4 +189,8 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+    import sys
+    if len(sys.argv) > 1:
+        HBNBCommand().onecmd(' '.join(sys.argv[1:]))
+    else:
+        HBNBCommand().cmdloop()
