@@ -5,12 +5,12 @@ class BaseModel that defines all common attributes/methods for other classes
 
 import uuid
 from datetime import datetime
-from models import storage
 
 
 class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialize BaseModel instance."""
+        from models import storage
         if kwargs:
             for key, value in kwargs.items():
                 if key != '__class__':
@@ -34,6 +34,7 @@ class BaseModel:
     def save(self):
         """Update updated_at with the current datetime
         and call save method of storage."""
+        from models import storage
         self.updated_at = datetime.now()
         storage.save()
 
