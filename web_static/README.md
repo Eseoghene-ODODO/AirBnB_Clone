@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Learning Objectives
 - At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
 
@@ -18,8 +17,6 @@
 - [center boxes](https://css-tricks.com/centering-css-complete-guide/)
 ### Learning Objectives💡
 `What you should learn from this project:`
-
->>>>>>> 66eb971cc2fc29071582bea8e4f734c888bb69b2
 - What is HTML
 - How to create an HTML page
 - What is a markup language
@@ -33,8 +30,7 @@
 - What is a selector
 - How to compute CSS Specificity Value
 - What are Box properties in CSS
-<<<<<<< HEAD
-=======
+
 ##
 0. Inline styling
 - Write an HTML page that displays a header and a footer.
@@ -62,4 +58,3 @@
 - Improve the page by adding responsive design to display correctly in mobile or small screens.
 12. Accessibility
 - Improve the page by adding Accessibility support
->>>>>>> 66eb971cc2fc29071582bea8e4f734c888bb69b2
